@@ -1,0 +1,15 @@
+{
+    "id": "coinspay",
+    "type": "mod",
+    "name": "CoinsPay",
+    "description": "Cryptocurrency payments through CoinsPay: the companion module of the Coinspay payment gateway. Polls CoinsPay invoices with the cron, follows invoice changes and shows the connection status.",
+    "icon_url": "icon.svg",
+    "author": "CoinsPay",
+    "author_url": "https://coinspay.app",
+    "homepage_url": "https://coinspay.app/plugins/fossbilling",
+    "project_url": "https://github.com/coinspayapp/coinspay-fossbilling",
+    "license": "GPL-3.0-or-later",
+    "version": "0.1.0",
+    "minimum_fossbilling_version": "0.8.0",
+    "minimum_boxbilling_version": "0.8.0"
+}
