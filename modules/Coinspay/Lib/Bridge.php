@@ -181,7 +181,7 @@ final class Bridge
     {
         $module = self::module($di, self::PAGE_TIMEOUT);
         $host = $module->host();
-        $text = $module->adminText();
+        $text = $module->pageText();
         $environment = [];
 
         $gateway = self::gateway($di);

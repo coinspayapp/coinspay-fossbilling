@@ -24,7 +24,7 @@ final class Status
     {
         $module = $this->module;
         $settings = $module->settings();
-        $text = $module->adminText();
+        $text = $module->pageText();
         $lines = [];
 
         $repo = $module->repo();

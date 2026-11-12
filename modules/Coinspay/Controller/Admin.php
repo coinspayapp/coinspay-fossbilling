@@ -51,7 +51,7 @@ class Admin implements \FOSSBilling\InjectionAwareInterface
     public function get_index(\Box_App $app): string
     {
         $this->di['is_admin_logged'];
-        $text = new Text((new FossbillingHost($this->di))->adminLanguage());
+        $text = new Text((new FossbillingHost($this->di))->userLanguage());
 
         return $app->render('mod_coinspay_index', [
             'coinspay_title' => $text->t('status_title'),

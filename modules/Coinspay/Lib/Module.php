@@ -69,10 +69,16 @@ class Module
         return new Tokens($this->settings()->tokenSecret());
     }
 
-    /** Texts in the default language of FOSSBilling: the log and the status for the admin. */
+    /** Texts in the default language of FOSSBilling: the log and the notes of transactions. */
     public function adminText(): Text
     {
         return new Text($this->host->adminLanguage());
+    }
+
+    /** Texts of the page shown now, the status block for one: in the language its reader picked. */
+    public function pageText(): Text
+    {
+        return new Text($this->host->userLanguage());
     }
 
     public function sync(): Sync

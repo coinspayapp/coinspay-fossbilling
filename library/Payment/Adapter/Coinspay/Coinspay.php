@@ -12,6 +12,7 @@
  */
 
 use Box\Mod\Coinspay\Lib\Bridge;
+use Box\Mod\Coinspay\Lib\FossbillingHost;
 use Box\Mod\Coinspay\Lib\Settings;
 use Box\Mod\Coinspay\Lib\Text;
 use Box\Mod\Coinspay\Lib\Util;
@@ -38,7 +39,7 @@ class Payment_Adapter_Coinspay implements FOSSBilling\InjectionAwareInterface
 
     public static function getConfig(): array
     {
-        $text = new Text(self::adminLocale());
+        $text = new Text(self::pageLocale());
         $yesNo = fn (bool $default) => $default
             ? ['1' => $text->t('field_yes'), '0' => $text->t('field_no')]
             : ['0' => $text->t('field_no'), '1' => $text->t('field_yes')];
@@ -153,13 +154,12 @@ class Payment_Adapter_Coinspay implements FOSSBilling\InjectionAwareInterface
         return $this->di;
     }
 
-    /** Language of the admin area: the default locale of FOSSBilling. */
-    private static function adminLocale(): string
+    /** The language the admin picked in FOSSBilling, else its default: the form follows the admin area. */
+    private static function pageLocale(): string
     {
+        global $di;
         try {
-            $locale = FOSSBilling\Config::getProperty('i18n.locale', 'en_US');
-
-            return is_string($locale) ? $locale : 'en_US';
+            return (new FossbillingHost($di))->userLanguage();
         } catch (Throwable) {
             return 'en_US';
         }

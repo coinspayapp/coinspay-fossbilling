@@ -197,4 +197,13 @@ final class PartsTest extends TestCase
         $host->settings['api_key'] = '';
         $this->assertStringContainsString('Put the API key', (new Status(fake_module($host, new MemoryRepo, $client)))->html());
     }
+
+    public function test_the_status_block_speaks_the_language_of_its_reader_and_the_log_the_default_one()
+    {
+        $host = new FakeHost;
+        $host->locale = 'ru_RU';
+        $module = fake_module($host, new MemoryRepo, new FakeClient);
+        $this->assertStringContainsString('Адрес вебхука для кабинета CoinsPay', (new Status($module))->html());
+        $this->assertStringContainsString('Webhook address', $module->adminText()->t('status_webhook', 'x'));
+    }
 }

@@ -24,10 +24,10 @@ interface Host
     /** Whether a database transaction is open on the connection. */
     public function inTransaction(): bool;
 
-    /** Language of the admin texts: the default locale of FOSSBilling. */
+    /** Language of what the module writes down (the log, the notes of transactions): the default locale of FOSSBilling. */
     public function adminLanguage(): string;
 
-    /** Language of the person on the page now. */
+    /** Language of the person on the page now, admin or client: the one picked in FOSSBilling, else the default. */
     public function userLanguage(): string;
 
     /** Whether the person on the page now is a signed-in FOSSBilling admin. */

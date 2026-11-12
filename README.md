@@ -104,6 +104,10 @@ python bin/build.py
 
 ## Changelog
 
+### 0.1.1
+
+- The page of the module and the form of the gateway speak the language the admin picked in FOSSBilling, not only its default one.
+
 ### 0.1.0
 
 - First release.
