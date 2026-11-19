@@ -87,4 +87,9 @@ return [
     'field_debug_help' => 'More lines in the log of FOSSBilling.',
     'field_yes' => 'Yes',
     'field_no' => 'No',
+
+    // Activation of the module: it writes the payment adapter into library/Payment/Adapter/Coinspay.
+    'gateway_foreign' => 'The folder %1$s holds another payment gateway named Coinspay. CoinsPay did not overwrite it: move that folder away, then activate the module again.',
+    'gateway_not_writable' => 'CoinsPay could not write its payment gateway into %1$s. Let the web server\'s user write to library/Payment/Adapter, or copy the files of modules/Coinspay/Gateway into %1$s by hand, then activate the module again.',
+    'gateway_source_missing' => 'The folder modules/Coinspay/Gateway is missing or incomplete. Unpack the CoinsPay archive again, then activate the module again.',
 ];

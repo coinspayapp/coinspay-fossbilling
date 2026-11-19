@@ -37,8 +37,10 @@ The fee is as low as 0.3% of each payout: the rate goes down as the monthly turn
 
 1. Get the archive `coinspay-fossbilling-<version>.zip` from the releases of this repository, or build it yourself (see [Development](#development)).
 2. Unpack it into the root folder of FOSSBilling, the one with `config.php`. It adds two folders: `modules/Coinspay` (the module) and `library/Payment/Adapter/Coinspay` (the payment gateway).
-3. In the admin area open Extensions, find "CoinsPay" and activate it. This creates the tables of the gateway and connects it to invoice changes and the cron.
+3. In the admin area open Extensions, find "CoinsPay" and activate it. This creates the tables of the gateway, connects it to invoice changes and the cron, and writes the payment gateway into `library/Payment/Adapter/Coinspay` from the module's copy in `modules/Coinspay/Gateway`. If the web server cannot write there, the activation says so: copy the files of `modules/Coinspay/Gateway` into `library/Payment/Adapter/Coinspay` by hand and activate the module again.
 4. Open System → Payment gateways → "New payment gateway" and install "Coinspay". Give it the title your clients see, for example "Crypto (CoinsPay)".
+
+The other archive of a release, `coinspay-fossbilling-module-<version>.zip`, is the module alone with its files at the root, the way the extension directory of FOSSBilling installs a module into `modules/Coinspay`. The module writes the payment gateway when it is activated, so nothing else is needed.
 
 The installation guide is also available as a separate document in [English](docs/install-en.md) and [Russian](docs/install-ru.md).
 
@@ -72,7 +74,7 @@ By default a test payment is only written to the log. An added test payment is r
 
 ## Removal
 
-Delete the gateway in Payment gateways, deactivate the module in Extensions and delete the folders `modules/Coinspay` and `library/Payment/Adapter/Coinspay`. The tables `coinspay_invoices` and `coinspay_kv` stay in the database: they tell which payments were added, so keep them if you may install the gateway again.
+Delete the gateway in Payment gateways, deactivate the module in Extensions and delete the folders `modules/Coinspay` and `library/Payment/Adapter/Coinspay`: deactivating the module leaves the gateway's folder in place, because invoices and transactions refer to the gateway. The tables `coinspay_invoices` and `coinspay_kv` stay in the database: they tell which payments were added, so keep them if you may install the gateway again.
 
 ## Development
 
@@ -82,10 +84,10 @@ modules/Coinspay/Controller/              the webhook and the return (Client), t
 modules/Coinspay/Lib/FossbillingHost.php  the only class that knows the models and tables of FOSSBilling
 modules/Coinspay/Lib/                     the rest: no framework, covered by unit tests
 modules/Coinspay/lang/                    en and ru texts
-library/Payment/Adapter/Coinspay/         the payment gateway: its form, "pay", ipn.php
+modules/Coinspay/Gateway/                 the payment adapter: its form, "pay", ipn.php
 ```
 
-FOSSBilling lists every PHP file in the folder of a payment adapter as a gateway, so the adapter is one file and the gateway lives in the module.
+FOSSBilling lists every PHP file in the folder of a payment adapter as a gateway, so the adapter is one file and the gateway lives in the module. FOSSBilling loads the adapter from `library/Payment/Adapter/Coinspay`, while its extension directory installs a module into `modules/Coinspay` alone, so the module keeps the adapter in `Gateway/` and writes it there on every activation and update (`Lib/GatewayFiles.php`). A folder holding some other adapter named Coinspay is left alone.
 
 A payment goes to the client's balance with the type `coinspay` and the first 20 characters of the CoinsPay invoice id as its reference. Before adding anything the gateway reads what the balance already holds for that CoinsPay invoice, under a named lock of the invoice and a claim of the row, so two concurrent requests cannot add it twice. Each CoinsPay invoice is also one transaction on the FOSSBilling invoice, with the CoinsPay invoice id as the transaction id, for the admin to see.
 
@@ -100,9 +102,14 @@ docker run --rm -v "$P:/app" -w /app php:8.3-cli vendor/bin/phpcs -q
 python bin/build.py
 ```
 
-`bin/build.py` writes `dist/coinspay-fossbilling-<version>.zip`.
+`bin/build.py` writes two archives into `dist/`: `coinspay-fossbilling-<version>.zip` to unpack into the root of FOSSBilling, and `coinspay-fossbilling-module-<version>.zip`, the module alone, for the extension directory.
 
 ## Changelog
+
+### 0.2.0
+
+- The module carries the payment gateway and writes it into `library/Payment/Adapter/Coinspay` when it is activated or updated, so FOSSBilling's extension directory can install CoinsPay as one module.
+- A second archive, `coinspay-fossbilling-module-<version>.zip`, holds the module alone, as the extension directory takes it.
 
 ### 0.1.1
 

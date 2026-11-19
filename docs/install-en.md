@@ -11,7 +11,7 @@ You need:
 
 1. Download `coinspay-fossbilling-<version>.zip` from the releases of the repository.
 2. Unpack it into the root folder of FOSSBilling, the one with `config.php`. Two folders appear: `modules/Coinspay` and `library/Payment/Adapter/Coinspay`.
-3. In the admin area open Extensions, find "CoinsPay" and press "Activate".
+3. In the admin area open Extensions, find "CoinsPay" and press "Activate". The module also writes the payment gateway into `library/Payment/Adapter/Coinspay`. If the web server cannot write there, the activation says so: copy the files of `modules/Coinspay/Gateway` into `library/Payment/Adapter/Coinspay` by hand and press "Activate" again.
 4. Open System → Payment gateways → "New payment gateway" and install "Coinspay". Type the title your clients will see, for example "Crypto (CoinsPay)".
 
 ## Settings

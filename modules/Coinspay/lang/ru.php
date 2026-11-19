@@ -87,4 +87,9 @@ return [
     'field_debug_help' => 'Больше строк в журнале FOSSBilling.',
     'field_yes' => 'Да',
     'field_no' => 'Нет',
+
+    // Активация модуля: он записывает платёжный шлюз в library/Payment/Adapter/Coinspay.
+    'gateway_foreign' => 'В папке %1$s лежит другой платёжный шлюз с именем Coinspay. CoinsPay не стал его перезаписывать: уберите эту папку и активируйте модуль снова.',
+    'gateway_not_writable' => 'CoinsPay не смог записать свой платёжный шлюз в %1$s. Разрешите пользователю веб-сервера запись в library/Payment/Adapter или скопируйте файлы из modules/Coinspay/Gateway в %1$s вручную, затем активируйте модуль снова.',
+    'gateway_source_missing' => 'Папки modules/Coinspay/Gateway нет или в ней не хватает файлов. Распакуйте архив CoinsPay заново и активируйте модуль снова.',
 ];

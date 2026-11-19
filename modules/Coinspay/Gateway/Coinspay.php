@@ -3,10 +3,13 @@
 /**
  * CoinsPay for FOSSBilling — the payment adapter.
  *
- * FOSSBilling lists every PHP file of this folder as a gateway, so this is the only one: the
- * gateway itself lives in the CoinsPay module (modules/Coinspay), which this adapter calls. The
- * module takes the webhook of CoinsPay, polls with the cron and adds payments to the balance of
- * the client exactly once.
+ * FOSSBilling loads it from library/Payment/Adapter/Coinspay. The CoinsPay module keeps this copy
+ * in modules/Coinspay/Gateway and writes it there when activated, so do not edit it in library:
+ * the next activation or update of the module replaces it. FOSSBilling lists every PHP file of
+ * that folder as a gateway, so this is the only one.
+ *
+ * The gateway itself lives in the module, which this adapter calls. The module takes the webhook
+ * of CoinsPay, polls with the cron and adds payments to the balance of the client exactly once.
  *
  * @license GPL-3.0-or-later
  */

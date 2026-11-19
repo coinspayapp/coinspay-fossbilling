@@ -7,7 +7,7 @@ namespace Box\Mod\Coinspay\Lib;
  */
 final class Settings
 {
-    public const VERSION = '0.1.1';
+    public const VERSION = '0.2.0';
 
     public const LIFETIME_MIN = 15;
 
